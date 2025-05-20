@@ -104,15 +104,7 @@ Para a automação de testes realizada, ilustre através de um mapa mental, a  s
 
 ### Mapa mental
 
-              Estratégia de Testes - Trello API
-                           |
-    --------------------------------------------------
-   |              |              |                   |
- Planejamento   Ferramentas   Tipos de Teste     Estrutura do Projeto
-   |               |               |                     |
-Objetivo       Cypress        Funcionais           Cypress.config.js
-Escopo         Mochawesome    Negativos            e2e/
-               Postman        Segurança            reports/
+![alt text](image-1.png)
 
 1. Planejamento
    ├─ Objetivo: Validar endpoints do Trello

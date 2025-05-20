@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 
 let boardId = '';
 let cardId = '';
@@ -5,11 +6,12 @@ let cardId = '';
 describe('Testes API do Trello', () => {
 
   it('CT01 - Deve criar um novo board com nome Válido', () => {
-    cy.createBoard('NewBoard')
+    const newBoard = faker.company.name();
+    cy.createBoard(newBoard)
       .then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.id).be.not.null;
-        expect(response.body.name).to.eq('NewBoard');
+        expect(response.body.name).to.eq(newBoard);
     });
   });
 
@@ -21,11 +23,13 @@ describe('Testes API do Trello', () => {
   });
 
   it('CT03 - Deve criar um card no board com dados válidos', () => {
-    cy.createBoard("NewBoard").then((response) => {
+    const newBoard = faker.company.name();
+    const cardName = faker.commerce.productName();
+    cy.createBoard(newBoard).then((response) => {
       expect(response.status).to.eq(200);
       boardId = response.body.id;
       cy.returnIdListBoard(boardId).then((listId) => {  
-        cy.createCard("Meu Card", listId)
+        cy.createCard(cardName, listId)
           .then((response) => {
             expect(response.status).to.eq(200);
             cardId = response.body.id;
@@ -35,7 +39,8 @@ describe('Testes API do Trello', () => {
   });
 
   it('CT04 - Deve criar um card no board com lista inexistente', () => {
-    cy.createCard("Meu Card", null)
+    const cardName = faker.commerce.productName();
+    cy.createCard(cardName, null)
       .then((response) => {
         expect(response.status).to.eq(400);
         cardId = response.body.id;
@@ -43,11 +48,13 @@ describe('Testes API do Trello', () => {
   });
 
   it('CT05 - Deve excluir o card com Id válido', () => {
-    cy.createBoard("NewBoard").then((response) => {
+    const newBoard = faker.company.name();
+    const cardName = faker.commerce.productName();
+    cy.createBoard(newBoard).then((response) => {
       expect(response.status).to.eq(200);
       boardId = response.body.id;
       cy.returnIdListBoard(boardId).then((listId) => {  
-        cy.createCard("Meu Card", listId)
+        cy.createCard(cardName, listId)
           .then((response) => {
             expect(response.status).to.eq(200);
             cardId = response.body.id;          
@@ -66,7 +73,8 @@ describe('Testes API do Trello', () => {
   });
 
   it('CT07 - Deve excluir o board com Id válido', () => {
-    cy.createBoard("NewBoard").then((response) => {
+    const newBoard = faker.company.name();
+    cy.createBoard(newBoard).then((response) => {
       expect(response.status).to.eq(200);
       boardId = response.body.id;
       cy.deleteBoard(boardId).then((response) => {
